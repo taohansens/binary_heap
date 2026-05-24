@@ -106,3 +106,21 @@ class BinaryHeap:
             self._sift_down(index)
 
         return True
+
+    def is_valid_heap(self, array):
+        n = len(array)
+
+        # Percorre apenas os nós que possuem filhos (até a metade)
+        for i in range((n - 2) // 2 + 1):
+            left = 2 * i + 1
+            right = 2 * i + 2
+
+            # Verifica se o filho da esquerda existe e se viola a regra da Max-Heap
+            if left < n and array[left] > array[i]:
+                return False
+
+            # Verifica se o filho da direita existe e se viola a regra da Max-Heap
+            if right < n and array[right] > array[i]:
+                return False
+
+        return True
