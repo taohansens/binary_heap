@@ -74,3 +74,10 @@ class BinaryHeap:
             self.data[index], self.data[largest] = self.data[largest], self.data[index]
             self.swap_count += 1
             self._sift_down(largest)
+
+        def contains(self, valor):
+            for item in self.data:
+                if item == valor:
+                    return True
+            return False
+        
