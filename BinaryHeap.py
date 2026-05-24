@@ -75,9 +75,34 @@ class BinaryHeap:
             self.swap_count += 1
             self._sift_down(largest)
 
-        def contains(self, valor):
-            for item in self.data:
-                if item == valor:
-                    return True
+    def contains(self, valor):
+        for item in self.data:
+            if item == valor:
+                return True
+        return False
+
+    def delete(self, valor):
+        try:
+            index = self.data.index(valor)
+        except ValueError:
             return False
-        
+
+        if index == len(self.data) - 1:
+            self.data.pop()
+            return True
+
+        # Substitui o elemento a ser removido pelo último
+        self.data[index] = self.data.pop()
+
+        # Reorganiza a heap a partir do índice modificado
+        # O elemento trocado pode precisar subir ou descer
+        parent_idx = self.parent(index)
+
+        # Se não é a raiz e é maior que o pai, ele deve subir
+        if index > 0 and self.data[index] > self.data[parent_idx]:
+            self._sift_up(index)
+        else:
+            # Se não, descer
+            self._sift_down(index)
+
+        return True
