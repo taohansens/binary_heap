@@ -34,3 +34,43 @@ class BinaryHeap:
 
             # Atualiza o índice para o do pai e continua o laço
             index = pai_idx
+
+    def extract_max(self):
+        if not self.data:
+            return None
+
+        # Se tiver apenas 1 elem. não precisa reorganizar.
+        if len(self.data) == 1:
+            return self.data.pop()
+
+        # Pega o valor máximo (raiz) para retornar no final
+        max_val = self.data[0]
+
+        # Move o último elemento da lista para a raiz e o remove do final
+        # preserva a invariante de forma da árvore quase completa
+        self.data[0] = self.data.pop()
+
+        # Reorganiza a árvore de cima para baixo para preservar a invariante de ordem
+        self._sift_down(0)
+
+        return max_val
+
+    def _sift_down(self, index):
+        size = len(self.data)
+        largest = index
+        left = self.left_child(index)
+        right = self.right_child(index)
+
+        # Verifica se o filho da esquerda existe e é maior que o nó atual
+        if left < size and self.data[left] > self.data[largest]:
+            largest = left
+
+        # Verifica se o filho da direita existe e é maior que o maior até agora
+        if right < size and self.data[right] > self.data[largest]:
+            largest = right
+
+        # Se o maior não for o nó atual, realiza a troca e desce
+        if largest != index:
+            self.data[index], self.data[largest] = self.data[largest], self.data[index]
+            self.swap_count += 1
+            self._sift_down(largest)
