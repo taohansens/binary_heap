@@ -134,3 +134,15 @@ class BinaryHeap:
         start_idx = (len(self.data) // 2) - 1
         for i in range(start_idx, -1, -1):
             self._sift_down(i)
+
+    def get_k_largest(self, array, k):
+        # 1. Constrói a heap O(n)
+        self.build_heap(array)
+
+        resultado = []
+        # 2. Realiza extrações sucessivas apenas k vezes
+        for _ in range(min(k, len(self.data))):
+            resultado.append(self.extract_max())
+
+        return resultado
+    
