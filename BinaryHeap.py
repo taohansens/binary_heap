@@ -124,3 +124,13 @@ class BinaryHeap:
                 return False
 
         return True
+
+    def build_heap(self, array):
+        # Substitui a estrutura interna pelo array fornecido
+        self.data = array[:]
+        self.swap_count = 0  # Reseta o contador
+
+        # Inicia do último nó que possui filhos até chegar na raiz
+        start_idx = (len(self.data) // 2) - 1
+        for i in range(start_idx, -1, -1):
+            self._sift_down(i)
